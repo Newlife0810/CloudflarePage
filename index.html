@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloudflare Pages 部署練習</title>
+    <style>
+        /* 這裡是 CSS：負責網頁的「外觀」 */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        h1 {
+            color: #f6821f; /* Cloudflare 的標誌性橘色 */
+            margin-bottom: 10px;
+        }
+        p {
+            color: #555;
+            line-height: 1.6;
+        }
+        .status-box {
+            background-color: #f0f9eb;
+            color: #2c7a2c;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 20px 0;
+            font-weight: bold;
+            border: 1px solid #c3e6cb;
+        }
+        button {
+            background-color: #f6821f;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background-color: #d96d0d;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Hello Cloudflare!</h1>
+        
+        <div class="status-box">
+            ✅ 部署成功
+        </div>
+
+        <p>這是我透過 GitHub 自動部署到 Cloudflare Pages 的靜態網頁。</p>
+        
+        <p id="dynamic-text">點擊下方按鈕來測試 JavaScript 功能</p>
+
+        <button onclick="updateTime()">顯示現在時間</button>
+    </div>
+
+    <script>
+        // 這裡是 JavaScript：負責網頁的「動作」
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString();
+            const dateString = now.toLocaleDateString();
+            
+            // 改變網頁上的文字內容
+            document.getElementById('dynamic-text').innerHTML = 
+                "現在的時間是：<br><strong>" + dateString + " " + timeString + "</strong>";
+            
+            alert("你好！JavaScript 運作正常！");
+        }
+    </script>
+</body>
+</html>
