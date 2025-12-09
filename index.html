@@ -3,87 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cloudflare Pages 部署練習</title>
+    <title>我的 Cloudflare 展示空間</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* 這裡是 CSS：負責網頁的「外觀」 */
+        /* CSS 變數設定，方便管理顏色 */
+        :root {
+            --bg-gradient: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --text-color: #ffffff;
+            --accent-color: #f6821f; /* Cloudflare Orange */
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #e0e0e0;
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
+            /* 背景動態漸層設定 */
+            background: var(--bg-gradient);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: var(--text-color);
+            overflow: hidden;
         }
-        .container {
-            background-color: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+
+        /* 背景流動動畫 */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 毛玻璃卡片容器 */
+        .glass-container {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px); /* 關鍵：背景模糊效果 */
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            padding: 50px;
             text-align: center;
-            max-width: 400px;
-            width: 90%;
+            max-width: 500px;
+            width: 85%;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            /* 進場動畫 */
+            animation: slideUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(30px);
         }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         h1 {
-            color: #f6821f; /* Cloudflare 的標誌性橘色 */
+            font-size: 2.5rem;
             margin-bottom: 10px;
+            /* 文字漸層效果 */
+            background: linear-gradient(to right, #fff, #ffd194);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        p {
-            color: #555;
-            line-height: 1.6;
-        }
-        .status-box {
-            background-color: #f0f9eb;
-            color: #2c7a2c;
-            padding: 10px;
-            border-radius: 5px;
-            margin: 20px 0;
+
+        .badge {
+            display: inline-block;
+            background: var(--accent-color);
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.9rem;
             font-weight: bold;
-            border: 1px solid #c3e6cb;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(246, 130, 31, 0.4);
         }
-        button {
-            background-color: #f6821f;
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 30px;
+        }
+
+        .action-btn {
+            background: transparent;
             color: white;
-            border: none;
-            padding: 12px 24px;
-            font-size: 16px;
+            border: 2px solid var(--accent-color);
+            padding: 15px 40px;
+            font-size: 1rem;
+            font-weight: bold;
             border-radius: 50px;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
-        button:hover {
-            background-color: #d96d0d;
+
+        .action-btn:hover {
+            background: var(--accent-color);
+            box-shadow: 0 0 20px rgba(246, 130, 31, 0.6);
+            transform: scale(1.05);
+        }
+
+        #result-area {
+            margin-top: 25px;
+            min-height: 30px;
+            font-weight: bold;
+            color: #23d5ab;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Hello Cloudflare!</h1>
+    <div class="glass-container">
+        <span class="badge">🚀 Cloudflare Pages Level Up!</span>
+        <h1>Welcome to the Future</h1>
         
-        <div class="status-box">
-            ✅ 部署成功
-        </div>
-
-        <p>這是我透過 GitHub 自動部署到 Cloudflare Pages 的靜態網頁。</p>
+        <p>這不再只是靜態網頁。這是一個結合了深色模式、動態漸層與毛玻璃特效的現代化介面。依然由 Cloudflare 全球邊緣網絡驅動。</p>
         
-        <p id="dynamic-text">點擊下方按鈕來測試 JavaScript 功能</p>
+        <button class="action-btn" onclick="triggerEffect()">啟動互動效果</button>
 
-        <button onclick="updateTime()">顯示現在時間</button>
+        <div id="result-area"></div>
     </div>
 
     <script>
-        // 這裡是 JavaScript：負責網頁的「動作」
-        function updateTime() {
-            const now = new Date();
-            const timeString = now.toLocaleTimeString();
-            const dateString = now.toLocaleDateString();
+        function triggerEffect() {
+            const resultArea = document.getElementById('result-area');
+            const now = new Date().toLocaleTimeString();
             
-            // 改變網頁上的文字內容
-            document.getElementById('dynamic-text').innerHTML = 
-                "現在的時間是：<br><strong>" + dateString + " " + timeString + "</strong>";
+            resultArea.style.opacity = 0;
             
-            alert("你好！JavaScript 運作正常！");
+            setTimeout(() => {
+                resultArea.innerHTML = `✨ 系統在 ${now} 確認：您的網站酷炫指數已爆表！`;
+                resultArea.style.transition = 'opacity 0.5s ease';
+                resultArea.style.opacity = 1;
+            }, 200);
+
+            // 讓按鈕震動一下的回饋感
+            const btn = document.querySelector('.action-btn');
+            btn.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                btn.style.transform = 'scale(1.05)';
+            }, 100);
+             setTimeout(() => {
+                btn.style.transform = 'scale(1)';
+            }, 200);
         }
     </script>
 </body>
