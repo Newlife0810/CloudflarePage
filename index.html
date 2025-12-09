@@ -3,155 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的 Cloudflare 展示空間</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <title>吉伊卡哇的快樂天地 | Cloudflare Pages</title>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* CSS 變數設定，方便管理顏色 */
         :root {
-            --bg-gradient: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-            --glass-bg: rgba(255, 255, 255, 0.1);
-            --glass-border: rgba(255, 255, 255, 0.2);
-            --text-color: #ffffff;
-            --accent-color: #f6821f; /* Cloudflare Orange */
+            --bg-chiikawa: #fff5f7; /* 吉伊卡哇粉 */
+            --bg-hachiware: #f0f8ff; /* 小八藍 */
+            --bg-usagi: #fffbe0;    /* 烏薩奇黃 */
+            --text-color: #5d4037;
+            --card-bg: rgba(255, 255, 255, 0.85);
         }
 
         body {
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+            background-color: var(--bg-chiikawa);
             margin: 0;
-            font-family: 'Inter', sans-serif;
             height: 100vh;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            /* 背景動態漸層設定 */
-            background: var(--bg-gradient);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            color: var(--text-color);
+            justify-content: center;
+            transition: background-color 0.5s ease; /* 背景色平滑過渡 */
             overflow: hidden;
         }
 
-        /* 背景流動動畫 */
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* 毛玻璃卡片容器 */
-        .glass-container {
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px); /* 關鍵：背景模糊效果 */
-            -webkit-backdrop-filter: blur(10px);
-            border-radius: 20px;
-            border: 1px solid var(--glass-border);
-            padding: 50px;
-            text-align: center;
-            max-width: 500px;
-            width: 85%;
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-            /* 進場動畫 */
-            animation: slideUp 0.8s ease-out forwards;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        @keyframes slideUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        /* 背景飄浮的小裝飾 */
+        .bg-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: radial-gradient(#ffb7b2 2px, transparent 2px), radial-gradient(#ffb7b2 2px, transparent 2px);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+            opacity: 0.3;
         }
 
         h1 {
+            color: var(--text-color);
             font-size: 2.5rem;
-            margin-bottom: 10px;
-            /* 文字漸層效果 */
-            background: linear-gradient(to right, #fff, #ffd194);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .badge {
-            display: inline-block;
-            background: var(--accent-color);
-            padding: 5px 15px;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 15px rgba(246, 130, 31, 0.4);
-        }
-
-        p {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            color: rgba(255, 255, 255, 0.8);
             margin-bottom: 30px;
+            text-shadow: 2px 2px 0px #fff;
+            animation: bounce 2s infinite;
         }
 
-        .action-btn {
-            background: transparent;
-            color: white;
-            border: 2px solid var(--accent-color);
-            padding: 15px 40px;
-            font-size: 1rem;
-            font-weight: bold;
-            border-radius: 50px;
+        /* 彈跳動畫 */
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-20px);}
+            60% {transform: translateY(-10px);}
+        }
+
+        .container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 25px;
+            padding: 20px;
+            width: 200px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* 彈性過渡效果 */
+            border: 3px solid transparent;
+        }
+
+        .card:hover {
+            transform: scale(1.1) translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+
+        /* 圖片樣式 */
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 4px solid white;
+            background-color: #eee;
+        }
+
+        h2 {
+            margin: 0;
+            color: var(--text-color);
+            font-size: 1.5rem;
+        }
+
+        .speech-bubble {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            margin-top: 30px;
+            font-size: 1.2rem;
+            color: var(--text-color);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            max-width: 80%;
             position: relative;
-            overflow: hidden;
-        }
-
-        .action-btn:hover {
-            background: var(--accent-color);
-            box-shadow: 0 0 20px rgba(246, 130, 31, 0.6);
-            transform: scale(1.05);
-        }
-
-        #result-area {
-            margin-top: 25px;
-            min-height: 30px;
+            min-height: 24px;
             font-weight: bold;
-            color: #23d5ab;
+        }
+
+        /* 對話框下面的小三角形 */
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 0 10px 10px 10px;
+            border-style: solid;
+            border-color: transparent transparent white transparent;
+        }
+
+        .footer {
+            margin-top: 40px;
+            font-size: 0.8rem;
+            color: #888;
         }
     </style>
 </head>
 <body>
 
-    <div class="glass-container">
-        <span class="badge">🚀 Cloudflare Pages Level Up!</span>
-        <h1>Welcome to the Future</h1>
-        
-        <p>這不再只是靜態網頁。這是一個結合了深色模式、動態漸層與毛玻璃特效的現代化介面。依然由 Cloudflare 全球邊緣網絡驅動。</p>
-        
-        <button class="action-btn" onclick="triggerEffect()">啟動互動效果</button>
+    <div class="bg-pattern"></div>
 
-        <div id="result-area"></div>
+    <h1>✨ 吉伊卡哇的 Cloudflare 樂園 ✨</h1>
+
+    <div class="container">
+        <div class="card" onclick="changeTheme('chiikawa')">
+            <img src="https://placehold.co/150x150/ffefff/ff69b4?text=Chiikawa" alt="吉伊卡哇" class="avatar">
+            <h2>吉伊卡哇</h2>
+        </div>
+
+        <div class="card" onclick="changeTheme('hachiware')">
+            <img src="https://placehold.co/150x150/e6f2ff/4169e1?text=Hachiware" alt="小八" class="avatar">
+            <h2>小八貓</h2>
+        </div>
+
+        <div class="card" onclick="changeTheme('usagi')">
+            <img src="https://placehold.co/150x150/fffde7/ffd700?text=Usagi" alt="烏薩奇" class="avatar">
+            <h2>烏薩奇</h2>
+        </div>
+    </div>
+
+    <div class="speech-bubble" id="dialog">
+        點擊上面的角色，看看會發生什麼事？
+    </div>
+
+    <div class="footer">
+        Powered by Cloudflare Pages | Theme: Chiikawa Style
     </div>
 
     <script>
-        function triggerEffect() {
-            const resultArea = document.getElementById('result-area');
-            const now = new Date().toLocaleTimeString();
+        function changeTheme(character) {
+            const body = document.body;
+            const dialog = document.getElementById('dialog');
             
-            resultArea.style.opacity = 0;
-            
-            setTimeout(() => {
-                resultArea.innerHTML = `✨ 系統在 ${now} 確認：您的網站酷炫指數已爆表！`;
-                resultArea.style.transition = 'opacity 0.5s ease';
-                resultArea.style.opacity = 1;
-            }, 200);
+            // 每次點擊都有音效的感覺（這裡用文字震動代替）
+            dialog.style.transform = 'scale(1.1)';
+            setTimeout(() => dialog.style.transform = 'scale(1)', 100);
 
-            // 讓按鈕震動一下的回饋感
-            const btn = document.querySelector('.action-btn');
-            btn.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                btn.style.transform = 'scale(1.05)';
-            }, 100);
-             setTimeout(() => {
-                btn.style.transform = 'scale(1)';
-            }, 200);
+            if (character === 'chiikawa') {
+                body.style.backgroundColor = '#fff5f7'; // 粉色背景
+                dialog.innerText = '哇... 哇！(開心)';
+                dialog.style.color = '#e73c7e';
+            } else if (character === 'hachiware') {
+                body.style.backgroundColor = '#f0f8ff'; // 藍色背景
+                dialog.innerText = '不管發生什麼事，總會有辦法的！';
+                dialog.style.color = '#23a6d5';
+            } else if (character === 'usagi') {
+                body.style.backgroundColor = '#fffbe0'; // 黃色背景
+                dialog.innerText = '哈？普拉！！(怪叫)';
+                dialog.style.color = '#f6b93b';
+            }
         }
     </script>
 </body>
